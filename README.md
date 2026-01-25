@@ -1,3 +1,4 @@
+# Em desenvolvimento
 # 📉 Churn Prediction Project
 
 ## 🔍 Contexto
@@ -123,3 +124,4 @@ A escolha da ROC-AUC se dá pela capacidade de avaliar a separação entre churn
 ## 👤 Autor
 
 Projeto desenvolvido para fins de estudo e portfólio, com foco em **Data Analysis e Machine Learning aplicados a negócio**.
+
