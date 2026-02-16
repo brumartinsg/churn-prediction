@@ -29,4 +29,4 @@ Conforme o gráfico de `feature_importances_`, os fatores que mais influenciam a
 - `images/`: Gráficos gerados (Curva ROC, Matriz de Confusão, Importância).
 
 ---
-Bruna - 2026
+
