@@ -1,13 +1,17 @@
-#
+# -*- coding: utf-8 -*-
 """
-@author: brumartinsg (github)
+
+@author: brumartinsg (GitHub)
 """
 # %% Bibliotecas 
 
 import pandas as pd
 import numpy as np 
 import os
-print(os.getcwd())
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import roc_auc_score, roc_curve, confusion_matrix, ConfusionMatrixDisplay
 
 # %% Base de dados 
 
@@ -73,32 +77,61 @@ y_pred = model.predict(X_test)
 
 # %% Visualizações
 
-from sklearn.metrics import roc_auc_score, roc_curve
-import matplotlib.pyplot as plt
-
 # Calcular ROC-AUC
 auc = roc_auc_score(y_test, y_prob)
 print("ROC-AUC:", auc)
 
 # Curva ROC
 fpr, tpr, thresholds = roc_curve(y_test, y_prob)
-plt.figure(figsize=(8,6))
-plt.plot(fpr, tpr, label=f'ROC curve (AUC = {auc:.2f})')
-plt.plot([0,1], [0,1], 'k--', label='Random')
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate (Recall)')
-plt.title('ROC Curve')
-plt.legend()
+plt.figure(figsize=(10, 6))
+plt.plot(fpr, tpr, color='dodgerblue', lw=3, label=f'ROC curve (AUC = {auc:.2f})')
+plt.plot([0, 1], [0, 1], color='gray', linestyle='--', alpha=0.6)
+
+plt.title('Performance do Modelo: Curva ROC', fontsize=16, loc='left', pad=20)
+plt.xlabel('Taxa de Falsos Positivos', fontsize=12)
+plt.ylabel('Taxa de Verdadeiros Positivos (Recall)', fontsize=12)
+plt.legend(loc="lower right", frameon=True)
+plt.grid(alpha=0.2)
+
+ax = plt.gca()
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
+plt.tight_layout()
+plt.savefig('curva_roc.png', dpi=300)
 plt.show()
 
 # %% Importância das variáveis 
+
+plt.figure(figsize=(10, 6))
 importances = pd.Series(model.feature_importances_, index=X.columns)
-importances.nlargest(10).plot(kind='barh')
-plt.title('Top 10 Fatores que Geram Churn')
+
+# Gráfico de barras horizontais
+importances.nlargest(10).sort_values(ascending=True).plot(kind='barh', color='skyblue', width=0.8)
+
+plt.title('Quais fatores mais influenciam o Churn?', fontsize=16, loc='left', color='#333333', pad=20)
+plt.xlabel('Importância Relativa', fontsize=12)
+plt.grid(axis='x', alpha=0.3)
+
+ax = plt.gca()
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
+plt.tight_layout()
+plt.savefig('importancia_variaveis.png', dpi=300)
 plt.show()
 
 # %% Validação Matriz de confusão 
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+fig, ax = plt.subplots(figsize=(8, 7))
 cm = confusion_matrix(y_test, y_pred)
-ConfusionMatrixDisplay(cm).plot()
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['Ficou', 'Churn'])
 
+# Plot customizado
+disp.plot(cmap='Blues', ax=ax, colorbar=False)
+plt.title('Matriz de Confusão: Realidade vs Previsão', fontsize=16, pad=20)
+plt.xlabel('Previsão do Modelo', fontsize=12)
+plt.ylabel('Valor Real', fontsize=12)
+
+plt.tight_layout()
+plt.savefig('matriz_confusao.png', dpi=300)
+plt.show()
