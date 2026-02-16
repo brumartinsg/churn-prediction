@@ -1,127 +1,32 @@
-# Em desenvolvimento
-# 📉 Churn Prediction Project
+# 📉 Predição de Churn
+Autor: Bruna Martins
 
-## 🔍 Contexto
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white)
 
-Este projeto tem como objetivo **prever o churn de clientes** (cancelamento) utilizando técnicas de *Machine Learning*, com foco não apenas em performance estatística, mas também em **interpretação e aplicação prática para o negócio**.
+Este projeto aplica Machine Learning para prever o cancelamento de clientes (Churn). Através de uma análise de dados históricos, o modelo identifica padrões que indicam a probabilidade de um cliente deixar a empresa, permitindo ações proativas de retenção.
 
-O problema de churn é crítico em contextos de assinatura e recorrência, pois clientes que cancelam geram impacto direto em receita e crescimento. Antecipar esse comportamento permite ações proativas de retenção.
+## 📋 Resumo do Projeto
+O Churn é uma das métricas mais críticas para empresas de serviços. Neste projeto:
+- Tratamos dados ausentes e convertemos variáveis categóricas via **One-Hot Encoding**.
+- Lidamos com o **desbalanceamento de classes** (apenas 26% de churn na base) utilizando pesos balanceados no algoritmo.
+- Utilizamos o **Random Forest Classifier** pela sua robustez e facilidade de interpretação através da importância das variáveis.
 
----
+## 📊 Resultados Alcançados
+- **ROC-AUC: 0.84** (Excelente capacidade de distinção entre classes).
+- **Recall de 76%**: O modelo consegue identificar a grande maioria dos clientes que realmente pretendem sair.
 
-## 🎯 Objetivo
+### Top 10 Preditores de Churn
+Conforme o gráfico de `feature_importances_`, os fatores que mais influenciam a decisão do cliente são:
+1. **Tenure** (Tempo de contrato)
+2. **TotalCharges** e **MonthlyCharges** (Fatores financeiros)
+3. **Tipo de Contrato** (Mensal vs Bienal)
 
-Construir um modelo preditivo capaz de:
-
-* Estimar a probabilidade de churn de cada cliente
-* Priorizar clientes com maior risco de cancelamento
-* Apoiar decisões de negócio com base em dados
-
-A métrica principal utilizada é **ROC-AUC**, adequada para problemas de classificação binária com classes desbalanceadas.
-
----
-
-## 🧱 Estrutura do Projeto
-
-```
-churn-prediction/
-│
-├── data/
-│   ├── raw/                # Dados brutos
-│   └── processed/          # Dados tratados e prontos para modelagem
-│
-├── notebooks/
-│   ├── 01_eda.ipynb
-│   ├── 02_feature_engineering.ipynb
-│   └── 03_modeling.ipynb
-│
-├── src/
-│   ├── data_preprocessing.py
-│   ├── feature_engineering.py
-│   ├── train.py
-│   ├── evaluate.py
-│   └── utils.py
-│
-├── models/
-│   └── churn_model.pkl
-│
-├── reports/
-│   ├── roc_curve.png
-│   ├── confusion_matrix.png
-│   └── metrics.json
-│
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
+## 📁 Estrutura do Repositório
+- `churn_analysis.py`: Script principal com o pipeline de dados e modelo.
+- `customer-churn.csv`: Base de dados utilizada.
+- `images/`: Gráficos gerados (Curva ROC, Matriz de Confusão, Importância).
 
 ---
-
-## 🧪 Metodologia
-
-1. **Exploratory Data Analysis (EDA)**
-
-   * Análise de distribuição das variáveis
-   * Identificação de padrões associados ao churn
-
-2. **Feature Engineering**
-
-   * Tratamento de variáveis categóricas
-   * Criação de variáveis derivadas
-
-3. **Modelagem**
-
-   * Pipeline com pré-processamento + modelo
-   * Algoritmos testados: Regressão Logística, Random Forest
-
-4. **Avaliação**
-
-   * ROC-AUC
-   * Matriz de confusão
-   * Precision e Recall
-   * Análise de threshold
-
----
-
-## 📊 Métricas
-
-* **ROC-AUC** (métrica principal)
-* Precision
-* Recall
-* Confusion Matrix
-
-A escolha da ROC-AUC se dá pela capacidade de avaliar a separação entre churners e não churners independentemente do threshold.
-
----
-
-## 🔎 Principais Insights
-
-* Clientes com contratos mensais apresentam maior propensão ao churn
-* Baixo tempo de permanência (*tenure*) é um forte indicador de risco
-* Serviços adicionais de suporte reduzem significativamente a chance de churn
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-* Python
-* Pandas & NumPy
-* Scikit-learn
-* Matplotlib & Seaborn
-* Jupyter Notebook
-
----
-
-## 🚀 Próximos Passos
-
-* Ajuste fino de hiperparâmetros
-* Interpretação do modelo com SHAP
-* Simulação de impacto financeiro da retenção
-* Deploy do modelo como API
-
----
-
-## 👤 Autor
-
-Projeto desenvolvido para fins de estudo e portfólio, com foco em **Data Analysis e Machine Learning aplicados a negócio**.
-
+Bruna - 2026
