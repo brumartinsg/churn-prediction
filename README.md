@@ -13,6 +13,13 @@ O Churn é uma das métricas mais críticas para empresas de serviços. Neste pr
 - Lidamos com o **desbalanceamento de classes** (apenas 26% de churn na base) utilizando pesos balanceados no algoritmo.
 - Utilizamos o **Random Forest Classifier** pela sua robustez e facilidade de interpretação através da importância das variáveis.
 
+## 🧠 Premissas e Tratamento de Dados
+Para garantir a integridade do modelo, foram adotadas as seguintes premissas:
+- **Conversão de Dados:** A coluna `TotalCharges` continha valores vazios (strings com espaços) que impediam a análise numérica. Eles foram convertidos para `NaN` e as 11 linhas afetadas foram removidas, pois representavam menos de 0,15% da base.
+- **Engenharia de Variáveis:** - Variáveis categóricas foram transformadas em numéricas (Mapeamento Direto para binárias e One-Hot Encoding para múltiplas categorias).
+  - A coluna `customerID` foi removida da modelagem por ser apenas um identificador único sem poder preditivo.
+- **Desbalanceamento:** A base apresentava ~73% de retenção e ~27% de churn. Para evitar um modelo tendencioso, utilizamos o parâmetro `class_weight='balanced'` no Random Forest.
+
 ## 📊 Resultados Alcançados
 - **ROC-AUC: 0.84** (Excelente capacidade de distinção entre classes).
 - **Recall de 76%**: O modelo consegue identificar a grande maioria dos clientes que realmente pretendem sair.
@@ -29,4 +36,5 @@ Conforme o gráfico de `feature_importances_`, os fatores que mais influenciam a
 - `images/`: Gráficos gerados (Curva ROC, Matriz de Confusão, Importância).
 
 ---
+
 
